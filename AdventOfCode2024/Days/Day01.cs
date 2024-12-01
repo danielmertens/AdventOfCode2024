@@ -45,24 +45,37 @@ internal class Day01 : AbstractDay
 
         for (var i = 0; i < lines.Length; i++)
         {
-            var split = lines[i].Split("   ");
-            left.Add(ParseIntQuick(split[0]));
-            right.Add(ParseIntQuick(split[1]));
+            var (leftNumb, rightNumb) = ParseIntQuick(lines[i].AsSpan());
+            left.Add(leftNumb);
+            right.Add(rightNumb);
         }
 
         return (left, right);
     }
 
-    private int ParseIntQuick(string text)
+    private (int left, int right) ParseIntQuick(ReadOnlySpan<char> text)
     {
-        var number = 0;
-        for(var i = 0; i < text.Length; i++)
+        var left = 0;
+        var right = 0;
+
+        var index = 0;
+        while (text[index] != ' ')
         {
-            var numb = text[i] - '0';
-            number = (number * 10) + numb;
+            var numb = text[index] - '0';
+            left = (left * 10) + numb;
+            index++;
         }
 
-        return number;
+        index += 3;
+
+        while (index < text.Length)
+        {
+            var numb = text[index] - '0';
+            right = (right * 10) + numb;
+            index++;
+        }
+
+        return (left, right);
     }
 
     private class OrderedList : List<int>
