@@ -3,4 +3,4 @@
 
 using AdventOfCode2024.Days;
 
-new Day01().SolveProblem();
+new Day02().SolveProblem();
